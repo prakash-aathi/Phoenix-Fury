@@ -1,5 +1,6 @@
 import React,{ useState } from 'react'
 import { Navigate } from 'react-router-dom'
+import { RefreshToken } from '../../../utils/RefreshToken'
 
 const Homepage = () => {
   
@@ -7,11 +8,14 @@ const Homepage = () => {
 
   const handleLogout = () => { 
     localStorage.removeItem('token')
+    RefreshToken()
     setRedirectCheck(true)
   }
   
   if (!localStorage.getItem('token')) { 
-    return <Navigate to="/login" />  }
+    return <Navigate to="/login" />
+  }
+  
   return (
       <>
       <div>Homepage</div>

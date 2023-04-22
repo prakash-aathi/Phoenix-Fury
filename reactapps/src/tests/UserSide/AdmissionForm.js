@@ -2,11 +2,12 @@ import { queryByTestId, render, screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 import ApplyForm from '../../components/User/ApplyForm/ApplyForm';
-
+import { Provider } from 'react-redux'
+import { store } from '../../store';
 
 describe('HomePage Component', () => {
     
-    render(<MemoryRouter><ApplyForm /></MemoryRouter>)
+    render(<Provider store={store}><MemoryRouter><ApplyForm /></MemoryRouter></Provider>);
 
     test('fe_react_addStudent', () => {
        const  studentName = screen.queryByTestId('studentName');

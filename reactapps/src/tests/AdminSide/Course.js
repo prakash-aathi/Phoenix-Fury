@@ -3,10 +3,13 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import Course from '../../components/Admin/Course/Course';
 import { MemoryRouter } from 'react-router';
+import { Provider } from 'react-redux'
+import { store } from '../../store';
 
 describe('AddDetails', () => {
   test('fe_react_adminCourse', () => {
-    render(<MemoryRouter><Course /></MemoryRouter>);
+    render(<Provider store={store}><MemoryRouter><Course /></MemoryRouter></Provider>);
+
 
     const addCourse = screen.getByTestId('addCourse');
     const courseName = screen.getByTestId('courseName');

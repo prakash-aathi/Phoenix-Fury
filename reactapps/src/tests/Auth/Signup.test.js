@@ -3,10 +3,16 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import Signup from '../../components/Auth/Signup/Signup';
 import { MemoryRouter } from 'react-router';
+import { Provider } from 'react-redux'
+import { store } from '../../store';
+
 
 describe('<Signup />', () => {
   test('fe_react_signup', () => {
-    render(<MemoryRouter><Signup /></MemoryRouter>);
+    render(<Provider store={store}>
+      <MemoryRouter><Signup /></MemoryRouter>
+      </Provider>
+    );
     
     const email = screen.queryByTestId('email');
     const password = screen.queryByTestId('password');

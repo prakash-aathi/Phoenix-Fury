@@ -1,5 +1,4 @@
-const baseUrl = "https://8080-fcffeccfcdbefebcbbfafccddecaeebaeccc.project.examly.io";
-
+const baseUrl = "http://localhost:8080";
 const register = async (data) => { 
     const formatData = {
         email: data.email,
@@ -9,22 +8,26 @@ const register = async (data) => {
         mobileNumber: data.mobileNumber,
     } 
     console.log(formatData);
-    if (formatData.userRole === "admin")
-        return fetch(`${baseUrl}/admin/signup`, {
+    if (formatData.userRole === "Admin") {
+        const response = await fetch(`${baseUrl}/admin/signup`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formatData),
+        });
+        return response.json();
+    }
+    else {
+        const response = await fetch(`${baseUrl}/user/signup`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
         });
-    else
-        return fetch(`${baseUrl}/user/signup`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        });
+        return response.json();
+    }
 }
 
 const login = async (data) => { 
@@ -38,4 +41,15 @@ const login = async (data) => {
     return response.json();
 }
 
-export default { register, login };
+const tokenDetails = async (token) => { 
+    const response = await fetch(`${baseUrl}/details`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+        }
+    });
+    return response.json();
+}
+
+export default { register, login, tokenDetails };
